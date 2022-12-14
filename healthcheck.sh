@@ -36,8 +36,8 @@ CreateWalletAndBackup() {
                 sleep 10
 		if [ ! -f $PATH_HOME/wallet.dat ]; then
                         cp wallet.dat $PATH_HOME/wallet.dat
-                        screen -dmS massa-client bash -c 'massa-client -p '$PASSWORD''
-                        echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )]Backup wallet.dat to $PATH_HOME" >>$PATH_HOME/healthcheck.txt
+                        screen -dmS client bash -c 'massa-client -p '$PASSWORD''
+                        echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Backup wallet.dat to $PATH_HOME" >>$PATH_HOME/healthcheck.txt
                 fi
 	fi
 	# If staking_keys don't exist
@@ -54,7 +54,7 @@ CreateWalletAndBackup() {
                 if [ ! -e $PATH_HOME/staking_wallet.dat ]
                 then
 		        cp $PATH_NODE/config/staking_wallet.dat $PATH_HOME/staking_wallet.dat
-		        echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )]Backup staking_wallet.dat to $PATH_HOME" >>$PATH_HOME/healthcheck.txt
+		        echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Backup staking_wallet.dat to $PATH_HOME" >>$PATH_HOME/healthcheck.txt
                 fi
 	fi
 
@@ -63,7 +63,7 @@ CreateWalletAndBackup() {
 	then
 		# Copy node_privkey.key to $PATH_HOME
 		cp $PATH_NODE/config/node_privkey.key $PATH_HOME/node_privkey.key
-		echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )]Backup node_privkey.key to $PATH_HOME" >>$PATH_HOME/healthcheck.txt
+		echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Backup node_privkey.key to $PATH_HOME" >>$PATH_HOME/healthcheck.txt
 	fi
 }
 CheckNodeHealth() {
