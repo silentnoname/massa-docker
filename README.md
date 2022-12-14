@@ -6,7 +6,7 @@
 git clone https://github.com/silentnoname/massa-docker.git
 cd massa-docker
 sudo docker build -t runmassa:latest .
-sudo docker run -v $HOME/massadata:/runmassa/data --name massa --restart=always  -e AUTOHEAL_CONTAINER_LABEL=all  -d
+sudo docker run -v $HOME/massadata:/runmassa/data --name massa --restart=always runmassa:latest  -e AUTOHEAL_CONTAINER_LABEL=all  -d runmassa:latest
 ``` 
 the data will save in `$HOME/massadata` folder
 
