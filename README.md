@@ -1,4 +1,14 @@
 # Massa-docker
+## How to update from old testnet
+```
+cd $HOME
+sudo docker stop massa
+sudo docker rm massa
+sudo rm -rf $HOME/massadata
+sudo rm -rf massa-docker
+```
+and follow the step below, no date need to save (the score is linked to discord account)
+
 
 ## How to run
 
