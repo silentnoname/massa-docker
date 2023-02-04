@@ -30,8 +30,9 @@ screen -Rd client
 1. Join massa discord https://discord.gg/massa
 2. Send your address in #testnet-faucet channel.(open massa client, enter `wallet_info` to get your address)
 3. After get the token,enter `buy_rolls <address> 1 0` 
-4. Send anything in #testnet-rewards-registration channel,check dm.
-5. Follow the instruction from the Massabot. Send your IP address for routable score. 
+4. run `node_start_staking <address>`
+5. Send anything in #testnet-rewards-registration channel,check dm.
+6. Follow the instruction from the Massabot. Send your IP address for routable score. 
 
 
 ## More
