@@ -1,3 +1,5 @@
+#!/bin/bash
+
 IP=$1
 PASSWORD=$2
 skip=0

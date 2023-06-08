@@ -1,3 +1,5 @@
+#!/bin/bash
+
 PATH_HOME=/runmassa/data
 PATH_CLIENT=/runmassa/massa-client
 PATH_NODE=/runmassa/massa-node
