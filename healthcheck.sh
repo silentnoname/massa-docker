@@ -48,6 +48,80 @@ CreateWalletAndBackup() {
 		echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Backup node_privkey.key to $PATH_HOME" >>$PATH_HOME/healthcheck.txt
 	fi
 }
+
+#############################################################
+# FONCTION = GetCandidateRoll
+# DESCRIPTION = Ckeck candidate roll on node
+# RETURN = Candidate rolls amount
+#############################################################
+GetCandidateRoll() {
+	$PATH_CLIENT/massa-client -p $PASSWORD -j wallet_info | jq -r '.[].address_info.candidate_rolls'
+}
+
+#############################################################
+# FONCTION = GetRollBalance
+# DESCRIPTION = Ckeck final roll on node
+# RETURN = final rolls amount
+#############################################################
+GetRollBalance() {
+	$PATH_CLIENT/massa-client -p $PASSWORD -j wallet_info | jq -r '.[].address_info.final_rolls'
+}
+
+#############################################################
+# FONCTION = GetActiveRolls
+# DESCRIPTION = Ckeck active roll on node
+# RETURN = active rolls amount
+#############################################################
+GetActiveRolls() {
+	$PATH_CLIENT/massa-client -p $PASSWORD -j wallet_info | jq -r '.[].address_info.active_rolls'
+}
+
+#############################################################
+# FONCTION = GetMASAmount
+# DESCRIPTION = Check MAS amount on active wallet
+# RETURN = MAS amount
+#############################################################
+GetMASAmount() {
+	$PATH_CLIENT/massa-client -p $PASSWORD -j wallet_info | jq -r '.[].address_info.final_balance'
+}
+
+
+AutoBuyRoll(){
+        cd $PATH_CLIENT
+	address=$(massa-client -p $PASSWORD -j wallet_info | jq -r '.[].address_info.address')
+        # Get rolls
+	CandidateRolls=$(($(GetCandidateRoll $WalletAddress)))
+	ActiveRolls=$(($(GetActiveRolls $WalletAddress)))
+	Rolls=$(($(GetRollBalance $WalletAddress)))
+
+	# Get MAS amount and keep integer part
+	MasBalance=$(GetMASAmount $WalletAddress)
+	MasBalanceInt=$(echo $MasBalance | awk -F '.' '{print $1}')
+	MasBalanceInt="${MasBalanceInt:-0}"
+        ROLL_COST=100
+        echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Rolls: Candidate: $CandidateRolls, Final: $Rolls, Active: $ActiveRolls, Target: $targetRollAmount" >>$PATH_HOME/healthcheck.txt
+	
+        function buy_rolls {
+		local rolls_to_buy=$1
+                echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Buying $rolls_to_buy roll(s)..." >>$PATH_HOME/healthcheck.txt
+		massa-client -p $PASSWORD buy_rolls $WalletAddress $rolls_to_buy 0 > /dev/null
+	}
+
+	# Buy as many rolls as possible with available balance
+	if (( $MasBalanceInt >= $ROLL_COST )); then
+		rolls_to_buy=$(($MasBalanceInt / $ROLL_COST))
+		buy_rolls $rolls_to_buy
+	else
+		if (( $CandidateRolls == 0 )) && (( $ActiveRolls == 0 )); then
+                        echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Insuficient MAS balance to buy first ROLL. (current balance is $MasBalance MAS)" >>$PATH_HOME/healthcheck.txt
+	
+                fi
+
+	fi
+
+}
+
+
 CheckNodeHealth() {
         # Check node status and logs events
         # If node is still bootstrapping, ruturn 0
@@ -68,8 +142,11 @@ CheckNodeHealth() {
                 exit  1
         # If get_status hang
         else
+                AutoBuyRoll
                 exit 0
         fi
 }
+
+
 
 CheckNodeHealth

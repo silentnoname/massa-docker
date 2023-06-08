@@ -10,7 +10,7 @@ WORKDIR /runmassa
 EXPOSE 31244
 EXPOSE 31245
 EXPOSE 33035
-RUN apt-get update -y &&apt-get install curl screen -y
+RUN apt-get update -y &&apt-get install curl screen jq -y
 RUN chmod +x /runmassa/run.sh
 RUN chmod +x /runmassa/healthcheck.sh
 RUN mkdir -p /runmassa/data

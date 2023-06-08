@@ -25,6 +25,7 @@ fi
 echo $PASSWORD >>$PATH_HOME/password.txt
 # start the node
 cd $PATH_NODE
-massa-node -p $PASSWORD 2>&1 | tee $PATH_HOME/nodelogs.txt
+massa-node -p $PASSWORD 2>&1 > $PATH_HOME/nodelogs.txt
+
 
 
