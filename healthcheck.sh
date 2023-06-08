@@ -99,7 +99,7 @@ AutoBuyRoll(){
 	MasBalanceInt=$(echo $MasBalance | awk -F '.' '{print $1}')
 	MasBalanceInt="${MasBalanceInt:-0}"
         ROLL_COST=100
-        echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Rolls: Candidate: $CandidateRolls, Final: $Rolls, Active: $ActiveRolls, Target: $targetRollAmount" >>$PATH_HOME/healthcheck.txt
+        echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Rolls: Candidate: $CandidateRolls, Final: $Rolls, Active: $ActiveRolls" >>$PATH_HOME/healthcheck.txt
 	
         function buy_rolls {
 		local rolls_to_buy=$1

@@ -16,7 +16,7 @@ and follow the step below, no date need to save (the score is linked to discord 
 git clone https://github.com/silentnoname/massa-docker.git
 cd massa-docker
 sudo docker build -t runmassa:latest .
-sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=always  -p 31244-31245:31244-31245 -p 33035:33035 -e AUTOHEAL_CONTAINER_LABEL=all   runmassa:latest
+sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=always  -p 31244-31245:31244-31245 -p 33035:33035 33037:33037 -e AUTOHEAL_CONTAINER_LABEL=all   runmassa:latest
 ``` 
 the data will save in `$HOME/massadata` folder
 
