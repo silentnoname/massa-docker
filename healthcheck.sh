@@ -90,7 +90,7 @@ GetMASAmount() {
 
 AutoBuyRoll(){
         cd $PATH_CLIENT
-	address=$(massa-client -p $PASSWORD -j wallet_info | jq -r '.[].address_info.address')
+	WalletAddress=$(massa-client -p $PASSWORD -j wallet_info | jq -r '.[].address_info.address')
         # Get rolls
 	CandidateRolls=$(($(GetCandidateRoll $WalletAddress)))
 	ActiveRolls=$(($(GetActiveRolls $WalletAddress)))
