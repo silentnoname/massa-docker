@@ -9,6 +9,16 @@ sudo rm -rf massa-docker
 ```
 and follow the step below, no date need to save (the score is linked to discord account)
 
+## Upgrade from old version
+```
+sudo docker stop massa
+sudo docker rm massa
+cd $HOME/massa-docker
+git pull
+sudo docker build -t runmassa:latest .
+sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=always  -p 31244-31245:31244-31245 -p 33035:33035 -p 33037:33037 -e AUTOHEAL_CONTAINER_LABEL=all   runmassa:latest
+```
+
 
 ## How to run
 
