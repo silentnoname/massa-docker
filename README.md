@@ -33,7 +33,8 @@ the data will save in `$HOME/massadata` folder
 ## How to enter massa client
 ```
 sudo docker exec -it massa bash
-screen -Rd client
+cd massa-client
+./massa-client -p password
 ```
 
 ## How to join the testnet
