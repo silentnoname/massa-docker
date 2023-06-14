@@ -16,6 +16,13 @@ sudo docker rm massa
 cd $HOME/massa-docker
 git pull
 sudo docker build -t runmassa:latest .
+udo docker stop autoheal
+sudo docker rm autoheal
+sudo docker run -d --name autoheal \
+  --restart=always \
+  -e AUTOHEAL_CONTAINER_LABEL=all \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  willfarrell/autoheal
 sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=always -p 9898:9898  -p 31244-31245:31244-31245 -p 33035:33035 -p 33037:33037 -e AUTOHEAL_CONTAINER_LABEL=all   runmassa:latest
 ```
 
@@ -26,6 +33,13 @@ sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=alwa
 git clone https://github.com/silentnoname/massa-docker.git
 cd massa-docker
 sudo docker build -t runmassa:latest .
+sudo docker stop autoheal
+sudo docker rm autoheal
+sudo docker run -d --name autoheal \
+  --restart=always \
+  -e AUTOHEAL_CONTAINER_LABEL=all \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  willfarrell/autoheal
 sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=always  -p 31244-31245:31244-31245 -p 33035:33035 -p 33037:33037 -e AUTOHEAL_CONTAINER_LABEL=all   runmassa:latest
 ``` 
 the data will save in `$HOME/massadata` folder
