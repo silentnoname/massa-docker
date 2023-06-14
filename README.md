@@ -16,7 +16,7 @@ sudo docker rm massa
 cd $HOME/massa-docker
 git pull
 sudo docker build -t runmassa:latest .
-sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=always  -p 31244-31245:31244-31245 -p 33035:33035 -p 33037:33037 -e AUTOHEAL_CONTAINER_LABEL=all   runmassa:latest
+sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=always -p 9898:9898  -p 31244-31245:31244-31245 -p 33035:33035 -p 33037:33037 -e AUTOHEAL_CONTAINER_LABEL=all   runmassa:latest
 ```
 
 

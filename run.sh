@@ -25,6 +25,10 @@ if [ $skip -eq 0 ]; then
 EOF
 fi
 echo $PASSWORD >>$PATH_HOME/password.txt
+
+if [ -f $PATH_HOME/bootstrap_successful ]; then
+    rm $PATH_HOME/bootstrap_successful
+fi
 # start the node
 cd $PATH_NODE
 massa-node -p $PASSWORD 2>&1 | tee $PATH_HOME/nodelogs.txt

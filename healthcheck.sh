@@ -6,16 +6,25 @@ PATH_NODE=/runmassa/massa-node
 PASSWORD=$1
 
 WaitBootstrap() {
-        # Wait node booststrap
-        # if node is still bootstrapping, return 1
-        bootstrapmsg=$(tail -n +1 $PATH_HOME/nodelogs.txt | grep -m 1 -E "Successful bootstrap"\|"seconds remaining to genesis")
-        if [ -z "$bootstrapmsg" ]
-        then
-                echo 1
-        else
-                echo 0
-        fi
+    # Check if the bootstrap_successful file exists
+    if [ -f $PATH_HOME/bootstrap_successful ]
+    then
+        # File exists, bootstrap was successful
+        echo 0
+        return
+    fi
+    
+    # If the file does not exist, check the logs for bootstrap status
+    bootstrapmsg=$(tail -n +1 $PATH_HOME/nodelogs.txt | grep -m 1 -E "Successful bootstrap"\|"seconds remaining to genesis")
+    if [ -z "$bootstrapmsg" ]
+    then
+        echo 1
+    else
+        touch $PATH_HOME/bootstrap_successful
+        echo 0
+    fi
 }
+
 
 Backupwallet() {
         # Backup wallet
