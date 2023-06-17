@@ -16,7 +16,7 @@ sudo docker rm massa
 cd $HOME/massa-docker
 git pull
 sudo docker build -t runmassa:latest .
-udo docker stop autoheal
+sudo docker stop autoheal
 sudo docker rm autoheal
 sudo docker run -d --name autoheal \
   --restart=always \
