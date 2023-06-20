@@ -75,7 +75,7 @@ CreateWalletAndBackup() {
 	fi
  
  	checkStakingKey=$(massa-client -j node_get_staking_addresses -p $PASSWORD | jq -r '.[]')
-	if (-z "$checkStakingKey" )
+	if [ -z "$checkStakingKey" ]
 	then
 		# Get first wallet Address
 		walletAddress=$(GetWalletAddress)
