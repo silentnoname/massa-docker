@@ -36,7 +36,7 @@ Backupwallet() {
 
 GetWalletAddress() {
         cd $PATH_CLIENT
-	massa-client -j wallet_info | jq -r '.[].address_info.address'
+	massa-client -j wallet_info  -p $PASSWORD | jq -r '.[].address_info.address'
 }
 
 CreateWalletAndBackup() {
@@ -74,12 +74,12 @@ CreateWalletAndBackup() {
 		echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Backup node_privkey.key to $PATH_HOME" >>$PATH_HOME/healthcheck.txt
 	fi
  
- 	checkStakingKey=$(massa-client -j node_get_staking_addresses | jq -r '.[]')
+ 	checkStakingKey=$(massa-client -j node_get_staking_addresses -p $PASSWORD | jq -r '.[]')
 	if (-z "$checkStakingKey" )
 	then
 		# Get first wallet Address
 		walletAddress=$(GetWalletAddress)
-		massa-client node_start_staking $walletAddress > /dev/null
+		massa-client node_start_staking $walletAddress  -p $PASSWORD > /dev/null
                 echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Start staking with $walletAddress" >>$PATH_HOME/healthcheck.txt
 	fi
 }
