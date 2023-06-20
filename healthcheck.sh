@@ -34,6 +34,11 @@ Backupwallet() {
         fi
 }
 
+GetWalletAddress() {
+        cd $PATH_CLIENT
+	massa-client -j wallet_info | jq -r '.[].address_info.address'
+}
+
 CreateWalletAndBackup() {
 	## Create a wallet, stake and backup
 	# If wallet don't exist
@@ -67,6 +72,15 @@ CreateWalletAndBackup() {
 		# Copy node_privkey.key to $PATH_HOME
 		cp $PATH_NODE/config/node_privkey.key $PATH_HOME/node_privkey.key
 		echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Backup node_privkey.key to $PATH_HOME" >>$PATH_HOME/healthcheck.txt
+	fi
+ 
+ 	checkStakingKey=$(massa-client -j node_get_staking_addresses | jq -r '.[]')
+	if (-z "$checkStakingKey" )
+	then
+		# Get first wallet Address
+		walletAddress=$(GetWalletAddress)
+		massa-client node_start_staking $walletAddress > /dev/null
+                echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Start staking with $walletAddress" >>$PATH_HOME/healthcheck.txt
 	fi
 }
 
