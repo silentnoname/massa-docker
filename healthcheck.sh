@@ -79,6 +79,7 @@ CreateWalletAndBackup() {
 	then
 		# Get first wallet Address
 		walletAddress=$(GetWalletAddress)
+  		cd $PATH_CLIENT
 		massa-client node_start_staking $walletAddress  -p $PASSWORD > /dev/null
                 echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Start staking with $walletAddress" >>$PATH_HOME/healthcheck.txt
 	fi
