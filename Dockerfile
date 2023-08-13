@@ -7,11 +7,9 @@ ENV PASSWORD="password"
 ENV IP="none"
 # Set the working directory for massa-node
 WORKDIR /runmassa
-EXPOSE 9898
 EXPOSE 31244
 EXPOSE 31245
-EXPOSE 33035
-EXPOSE 33037
+
 
 RUN apt-get update -y && apt-get install curl screen jq -y
 RUN chmod +x /runmassa/run.sh
