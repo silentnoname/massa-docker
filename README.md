@@ -23,7 +23,7 @@ sudo docker run -d --name autoheal \
   -e AUTOHEAL_CONTAINER_LABEL=all \
   -v /var/run/docker.sock:/var/run/docker.sock \
   willfarrell/autoheal
-sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=always -p 9898:9898  -p 31244-31245:31244-31245 -p 33035:33035 -p 33037:33037 -e AUTOHEAL_CONTAINER_LABEL=all   runmassa:latest
+sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=always  -p 31244-31245:31244-31245 -e AUTOHEAL_CONTAINER_LABEL=all   runmassa:latest
 ```
 
 
@@ -40,7 +40,7 @@ sudo docker run -d --name autoheal \
   -e AUTOHEAL_CONTAINER_LABEL=all \
   -v /var/run/docker.sock:/var/run/docker.sock \
   willfarrell/autoheal
-sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=always  -p 31244-31245:31244-31245 -p 33035:33035 -p 33037:33037 -e AUTOHEAL_CONTAINER_LABEL=all   runmassa:latest
+sudo docker run -d -v $HOME/massadata:/runmassa/data --name massa --restart=always  -p 31244-31245:31244-31245  -e AUTOHEAL_CONTAINER_LABEL=all   runmassa:latest
 ``` 
 the data will save in `$HOME/massadata` folder
 
