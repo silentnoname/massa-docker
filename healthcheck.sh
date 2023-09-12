@@ -45,23 +45,24 @@ CreateWalletAndBackup() {
 	cd $PATH_CLIENT
 	checkWallet=`massa-client -p $PASSWORD wallet_info | grep -c "Address:"`
 
-	if ([ ! -e $PATH_CLIENT/wallet.dat ] || [ $checkWallet -lt 1 ])
+	if [ ! -d "$PATH_CLIENT/wallets" ] || [ -z "$(ls -A "$PATH_CLIENT/wallets")" ] || [ $checkWallet -lt 1 ]; 
 	then
 		# If wallet.dat already exists in $PATH_HOME
-		if [ -e $PATH_HOME/wallet.dat ]
+		if [ -d "$PATH_HOME/wallets" ] && [ -n "$(ls -A "$PATH_HOME/wallets")" ];
 		then
-			# Copy wallet.dat from $PATH_HOME to $PATH_CLIENT
-			cp $PATH_HOME/wallet.dat $PATH_CLIENT/wallet.dat
-			echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Copied wallet.dat from $PATH_HOME to $PATH_CLIENT" >>$PATH_HOME/healthcheck.txt
+
+			# Copy wallet from $PATH_HOME to $PATH_CLIENT
+			cp -r $PATH_HOME/wallets $PATH_CLIENT
+			echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Copied wallet from $PATH_HOME to $PATH_CLIENT" >>$PATH_HOME/healthcheck.txt
 		else
 			# Generate wallet
 			cd $PATH_CLIENT
 			massa-client -p $PASSWORD wallet_generate_secret_key > /dev/null
                         sleep 10
-			if [ ! -f $PATH_HOME/wallet.dat ]; then
-                        	cp wallet.dat $PATH_HOME/wallet.dat
+			if [ ! -d $PATH_HOME/wallets ]; then
+                        	cp -r wallets $PATH_HOME
                                 screen -dmS client bash -c 'massa-client -p '$PASSWORD''
-                                echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Backup wallet.dat to $PATH_HOME" >>$PATH_HOME/healthcheck.txt
+                                echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Backup wallet to $PATH_HOME" >>$PATH_HOME/healthcheck.txt
                         fi
 		fi
 	fi
