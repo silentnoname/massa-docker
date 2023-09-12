@@ -47,12 +47,12 @@ CreateWalletAndBackup() {
 
 	if [ ! -d "$PATH_CLIENT/wallets" ] || [ -z "$(ls -A "$PATH_CLIENT/wallets")" ] || [ $checkWallet -lt 1 ]; 
 	then
-		# If wallet.dat already exists in $PATH_HOME
+		# If wallets already exists in $PATH_HOME
 		if [ -d "$PATH_HOME/wallets" ] && [ -n "$(ls -A "$PATH_HOME/wallets")" ];
 		then
 
 			# Copy wallet from $PATH_HOME to $PATH_CLIENT
-			cp -r $PATH_HOME/wallets $PATH_CLIENT
+			cp -r $PATH_HOME/wallets/* $PATH_CLIENT/wallets
 			echo "[$(date +"%Y-%m-%d %H:%M:%S" --utc -d "+8 hours" )] Copied wallet from $PATH_HOME to $PATH_CLIENT" >>$PATH_HOME/healthcheck.txt
 		else
 			# Generate wallet
