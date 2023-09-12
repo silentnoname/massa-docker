@@ -18,5 +18,5 @@ RUN chmod +x /runmassa/clearlogs.sh  # Make the new script executable
 RUN mkdir -p /runmassa/data
 ENTRYPOINT ["sh","-c","/runmassa/clearlogs.sh & /runmassa/run.sh $IP $PASSWORD"]
 
-HEALTHCHECK --interval=30s --timeout=3s \
+HEALTHCHECK --interval=30s --timeout=10s \
   CMD /runmassa/healthcheck.sh $PASSWORD

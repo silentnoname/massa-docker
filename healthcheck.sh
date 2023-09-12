@@ -45,7 +45,7 @@ CreateWalletAndBackup() {
 	cd $PATH_CLIENT
 	checkWallet=`massa-client -p $PASSWORD wallet_info | grep -c "Address:"`
 
-	if [ ! -d "$PATH_CLIENT/wallets" ] || [ -z "$(ls -A "$PATH_CLIENT/wallets")" ] || [ $checkWallet -lt 1 ]; 
+	if [ -z "$(ls -A "$PATH_CLIENT/wallets")" ] || [ $checkWallet -lt 1 ]; 
 	then
 		# If wallets already exists in $PATH_HOME
 		if [ -d "$PATH_HOME/wallets" ] && [ -n "$(ls -A "$PATH_HOME/wallets")" ];
